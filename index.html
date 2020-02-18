@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
-
+    <link rel="stylesheet" href="css/style.css">
     <title>Formative3-1</title>
   </head>
   <body>
@@ -29,7 +29,16 @@
         <option value="jp">Japan</option>
       </select>
 
-      <select id="language" class="col-2 mr-2 mt-3 mb-3" name="language">
+      <select id="source" class="col-2 mr-2 mt-3 mb-3" name="source">
+        <option value="source" class="">Source</option>
+        <option value="bbc-news">BBC News</option>
+        <option value="cnbc">CNBC</option>
+        <option value="fox-news">Fox News</option>
+        <option value="cnn">CNN</option>
+        <option value="breitbart-news">Breitbart News</option>
+      </select>
+
+      <!-- <select id="language" class="col-2 mr-2 mt-3 mb-3" name="language">
         <option value="language">Language</option>
         <option value="en">English</option>
         <option value="hk">Chinese</option>
@@ -40,7 +49,7 @@
         <option value="sortBy">Sort By</option>
         <option value="publishedAt">Latest News</option>
         <option value="popularity">Popular</option>
-      </select>
+      </select> -->
 
       <button id="submit" type="button" class="col-2 mt-3 mb-3 btn btn-primary btn-lg text-light" name="button">Search</button>
     </nav>
@@ -58,6 +67,7 @@
 
 
 <script src="node_modules/jquery/dist/jquery.min.js"></script>
+<script src="js/config.json"></script>
 <script src="js/script.js"></script>
 <script src="node_modules/popper.js/dist/umd/popper.min.js"></script>
 <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>

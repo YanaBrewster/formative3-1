@@ -9,7 +9,7 @@ $(document).ready(function(){
   console.log(myKey[0]);
   myKey = myKey[0].key;
 
-  var url = 'http://newsapi.org/v2/top-headlines?' + 'country=us&' +  myKey;
+  var url = 'http://newsapi.org/v2/top-headlines?' + 'country=nz&' +  myKey;
   var req = new Request(url);
   fetch(req)
   .then(function(response) {
@@ -21,7 +21,7 @@ document.getElementById('submit').addEventListener('click', function(){
   country = document.getElementById('country').value;
   category = document.getElementById('category').value;
   sources = document.getElementById('sources').value;
-  displayNews(country, category, sources);
+  // displayNews(country, category, sources);
 });
 
 // // display data
@@ -59,13 +59,13 @@ $.ajax({
     //   '<p class="card-text">'+ data[i].publishedAt + '</p>'
     //   // '<a href="#" class="btn btn-info">More Info</a></div></div> '
     // }
-  }//success ends
+  },//success ends
 
-//   error:function(){
-//   console.log('error');
-// } // error
+  error:function(){
+  console.log('error');
+} // error
 
-}; // function displayAllNews ends here
+// }; // function displayAllNews ends here
 
 });//ajax
 

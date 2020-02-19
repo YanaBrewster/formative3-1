@@ -6,86 +6,70 @@ $(document).ready(function(){
   // });
 
   var myKey = JSON.parse(apiKey);
-   console.log(myKey[0]);
-   myKey = myKey[0].key;
+  console.log(myKey[0]);
+  myKey = myKey[0].key;
 
-   var country;
-   var category;
-   var source;
-   var endPoint;
+
+
+  var countryEp;
+  var category;
+  var source;
+
 
   //reading users choice
 
-   document.getElementById('submit').addEventListener('click', function(){
-    endPoint = document.getElementById('endPoint').value;
-     category = document.getElementById('category').value;
-     source = document.getElementById('source').value;
-     country = document.getElementById('country').value;
-     console.log(endPoint,category,country,source);
-     displayData(endPoint,category,country,source);
-   });
+  // document.getElementById('submit').addEventListener('click', function(){
+  //   countryEp = document.getElementById('countryEp').value;
+  //   category = document.getElementById('category').value;
+  //   sources = document.getElementById('sources').value;
+  //   console.log(countryEp, category, sources);
+  //   displayData(countryEp, category, sources);
+  // });
 
-// display data
-   function displayData(ep, ca, co, so){
-       console.log(ep, ca, co, so);
-       //ajax method
-       $.ajax({
-         url: `http://newsapi.org/v2/top-headlines?${ep}&apiKey=${myKey}`,
-         type:'GET',
-         data:'json',
-         success: function(data){
-           console.log(data);
-           if (ep === 'category'){
-             console.log('category');
-            category(data, ep, ca, co, so);
+  var url = 'http://newsapi.org/v2/top-headlines?' + 'country=us&' +  'apiKey=23ff36ea29f349d49a5f8fef2459395f';
+  var req = new Request(url);
+  fetch(req)
+  .then(function(response) {
+    console.log(response.json());
+  })
+
+  // display data
+  function displayData(data){
+    console.log(data);
+    //ajax method
+    $.ajax({
+      url: url,
+      type:'GET',
+      data:'json',
+      success: function(data){
+        console.log(data);
+        var i;
+
+            for (i=0; i<data.length; i++){
+
+              document.getElementById('result').innerHTML +=
+                '<div class="col pb-5">'+
+                '<div class="card border border-success" style="width: 18rem;">' +
+                '<img src="'+ data[i].articles.urlToImage +'" class="card-img-top" alt="">' +
+                '<div class="card-body"><h5 class="card-title">' + data[i].articles.title + '</h5>' +
+                '<p class="card-text">'+ data[i].articles.description + '</p>' +
+                '<p class="card-text">'+ data[i].articles.publishedAt + '</p>'
+                // '<a href="#" class="btn btn-info">More Info</a></div></div> '
+
           }
-          // else if (ep === 'country'){
-          //      console.log('country');
-          //    country(data, ep, ca, co, so);
-          //  } else if (ep === 'source'){
-          //     console.log('source');
-          //    source(data, ep, ca, co, so);
-          //  }
+      }, //success ends
 
-           // function category(data, ep, ca, co, so){
-           //   var k;
-           //   var userCategory;
-           //
-           //   document.getElementById('result').innerHTML = '';
-           //          for(k = 0; k < d.length; k++ ){
-           //            if (ca === 'general') {
-           //              userCategory = d[k].;
-           //            } else if (ca === 'business') {
-           //              userCategory = d[k].;
-           //            } else if (ca === 'health') {
-           //              userCategory = d[k].;
-           //            } else if (ca === 'entertainment') {
-           //              userCategory = d[k].;
-           //              console.log(data);
-           //            } else if (ca === 'sports') {
-           //              userCategory = d[k].;
-           //            }
-           //
-           //            document.getElementById('result').innerHTML +=
-           //            '<div class="col-3">' +
-           //            '<img class="img-fluid" alt="Image" src="' + data[k]. + '">' +
-           //            '<h4 class="text-white">' + data[k].+ '</h4>'+
-           //            '<p class="text-white">' + data[k].+ '</p>' +
-           //            '</div>';
-           //          } //  loop ends
-           //        }; // category ends
+      error:function(){
+        console.log('error');
+        // error
 
 
+      }});//ajax
 
-         }, //success ends
+    } // function displayData ends here
 
-            error:function(){
-              console.log('error');
-            // error
+  });//document.ready
 
-
-          }});//ajax
-
-          } // function displayData ends here
-
-          });//document.ready
+  // country=
+  // sources=
+  // category=

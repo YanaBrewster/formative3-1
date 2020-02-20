@@ -8,8 +8,8 @@ $(document).ready(function(){
   var myKey = JSON.parse(apiKey);
   console.log(myKey[0]);
   myKey = myKey[0].key;
+  console.log(myKey);
 
-  var url = 'http://newsapi.org/v2/top-headlines?' + 'country=nz&' +  myKey;
   var req = new Request(url);
   fetch(req)
   .then(function(response) {
@@ -34,7 +34,7 @@ document.getElementById('submit').addEventListener('click', function(){
 
 //ajax method
 $.ajax({
-  url: url,
+  url: 'http://newsapi.org/v2/top-headlines?' + 'country=nz' + '&apiKey=' +  myKey,
   type:'GET',
   data:'json',
   success: function(data){

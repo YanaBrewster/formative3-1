@@ -38,7 +38,7 @@ $(document).ready(function(){
     type:'GET',
     data:'json',
     success: function(data){
-      // console.log(data);
+      console.log(data);
       // displayAllNews(data){
 
 

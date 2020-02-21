@@ -17,14 +17,14 @@ $(document).ready(function(){
   // })
 
   //reading users choice
-  document.getElementById('submit').addEventListener('click', function(){
-    country = document.getElementById('country').value;
-    category = document.getElementById('category').value;
-    sources = document.getElementById('sources').value;
-    // displayNews(country, category, sources);
-  });
+  // document.getElementById('submit').addEventListener('click', function(){
+  //   country = document.getElementById('country').value;
+  //   category = document.getElementById('category').value;
+  //   sources = document.getElementById('sources').value;
+  //   // displayNews(country, category, sources);
+  // });
 
-  // // display data
+  // // display articles
   // function displayNews(data)
   //   if (ep === 'country' && 'category') {
   //     var url = `http://newsapi.org/v2/top-headlines?${co}${ca}${myKey}`;
@@ -39,20 +39,23 @@ $(document).ready(function(){
     data:'json',
     success: function(data){
       console.log(data);
-      // displayAllNews(data){
+      // displayAllNews(articles){
+      // var articles;
+      var i;
 
+        for (i=0; i<data.articles.length; i++){
 
-        for (i=0; i<data.length; i++){
           document.getElementById('result').innerHTML +=
-            '<div class="row border border-success">'+
-          '<div class="col pb-5">'+
-          '<div class="card border border-success" style="width: 18rem;">' +
-          '<img src="'+ data[i].urlToImage +'" class="card-img-top" alt="">' +
-          '<div class="card-body"><h5 class="card-title">' + data[i].title + '</h5>' +
-          '<p class="card-text">'+ data[i].description + '</p>' +
-          '<p class="card-text">'+ data[i].source.name + '</p>' +
-          '<p class="card-text">'+ data[i].publishedAt + '</p>';
+          // '<div class="row border border-success">'+
+          '<div class="col col-lg-4 col-md-12 col-sm-12 pb-3">'+
+          '<div class="card border border-primary">' +
+          '<img src="'+ data.articles[i].urlToImage +'" class="card-img" alt="news image">' +
+          '<div class="card-body px-3 py-3"><h5 class="card-title">' + data.articles[i].title + '</h5>' +
+          '<p class="card-text">'+ data.articles[i].description + '</p>' +
+          '<p class="card-text">Source: <i>'+ data.articles[i].source.name + '</i></p><hr>' +
+          '<p class="card-text">| '+ data.articles[i].publishedAt + ' |</p>';
           // '<a href="#" class="btn btn-info">More Info</a></div></div> '
+
         }// i loop ends
 
 
@@ -63,5 +66,23 @@ $(document).ready(function(){
     } // error
 });//ajax
 
+
+//  SHOW AND HIDE
+
+$('#about').hide();
+$('.btn-hide').hide();
+
+$('.btn-show').click(function(){
+	$('#about').slideDown(1000);
+	$('.btn-hide').show();
+	$('.btn-show').hide();
+});
+
+$('.btn-hide').click(function(){
+	$('#about').slideUp();
+  $('#about').hide();
+	$('.btn-hide').hide();
+	$('.btn-show').show();
+});
 
 });//document.ready

@@ -1,59 +1,76 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/style.css">
-    <title>Formative3-1</title>
-  </head>
-  <body>
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <title>Formative3-1</title>
+</head>
+<body>
 
-    <nav class="navbar navbar-dark bg-dark">
-      <h1 class="text-light">News</h1>
+  <nav class="navbar navbar-dark bg-dark">
+    <h2 class="text-light col-lg-1 col-sm-6">News</h2>
 
-      <select id="ep" class="col-2 mr-2 mt-3 mb-3" name="endPoint">
-        <option value="search">Search</option>
-        <option value="category">Category</option>
-        <option value="country">Country</option>
-        <option value="sources">Sources</option>
-      </select>
+    <select id="ep" class="col-lg-2 col-sm-6 mr-2 mt-3 mb-3" name="endPoint">
+      <option value="search">Search</option>
+      <option value="category">Category</option>
+      <option value="country">Country</option>
+      <option value="sources">Sources</option>
+    </select>
 
-      <select id="country" class="col-2 mr-2 mt-3 mb-3" name="country">
-        <option value="country" class="">Country</option>
-        <option value="nz">New Zealand</option>
-        <option value="gb">United Kingdom</option>
-        <option value="us">United States</option>
-        <option value="hk">Hong Kong</option>
-        <option value="jp">Japan</option>
-      </select>
+    <select id="country" class="col-lg-2 col-sm-6 mr-2 mt-3 mb-3" name="country">
+      <option value="country" class="">Country</option>
+      <option value="nz">New Zealand</option>
+      <option value="gb">United Kingdom</option>
+      <option value="us">United States</option>
+      <option value="hk">Hong Kong</option>
+      <option value="jp">Japan</option>
+    </select>
 
-      <select id="category" class="col-2 mr-2 mt-3 mb-3" name="category">
-        <option value="category">Category</option>
-        <option value="general">General</option>
-        <option value="business">Business</option>
-        <option value="health">Health</option>
-        <option value="entertainment">Entertainment</option>
-        <option value="sports">Sports</option>
-      </select>
+    <select id="category" class="col-lg-2 col-sm-6 mr-2 mt-3 mb-3" name="category">
+      <option value="category">Category</option>
+      <option value="general">General</option>
+      <option value="business">Business</option>
+      <option value="health">Health</option>
+      <option value="entertainment">Entertainment</option>
+      <option value="sports">Sports</option>
+    </select>
 
-      <select id="sources" class="col-2 mr-2 mt-3 mb-3" name="sources">
-        <option value="sources" class="">Sources</option>
-        <option value="bbc-news">BBC News</option>
-        <option value="cnbc">CNBC</option>
-        <option value="fox-news">Fox News</option>
-        <option value="cnn">CNN</option>
-        <option value="breitbart-news">Breitbart News</option>
-      </select>
+    <select id="sources" class="col-lg-2  col-sm-6 mr-2 mt-3 mb-3" name="sources">
+      <option value="sources" class="">Sources</option>
+      <option value="bbc-news">BBC News</option>
+      <option value="cnbc">CNBC</option>
+      <option value="fox-news">Fox News</option>
+      <option value="cnn">CNN</option>
+      <option value="breitbart-news">Breitbart News</option>
+    </select>
 
 
-      <button id="submit" type="button" class="col-2 mt-3 mb-3 btn btn-primary btn-lg text-light" name="button">Submit</button>
-    </nav>
-      <!-- end points -->
+    <button id="submit" type="button" class="col-lg-2 col-sm-4 mt-3 mb-3 btn btn-primary btn-lg text-light" name="button">Submit</button>
+  </nav>
+  <!-- end points -->
 
 
   <div class="container">
-    <div id="result" class="container row m-auto">
-
+    <div id="result" class="row m-auto pt-5">
+    </div>
+    <div class="row mb-5 mt-3">
+      <button class="btn-show btn-lg btn-info mx-auto">Who created this page?</button>
+    </div>
+    <div id="about" class="row mx-auto border border-info rounded-sm px-4 py-4">
+      <div class="col-4">
+        <img class="img-fluid pr-3" alt="Yana Brewster" src="images/yanabrewster.png">
+      </div>
+      <div class="col-8">
+        <h2>Yana Brewster</h2> <br>
+        <p>Along with my background experience in graphic design and publications, I am a motivated, creative problem-solver with a strong work ethic, and a fast learner of new programs. I am also responsible, reliable and accountable. My supervisors and team-mates often comment on my good attention to detail and my ability to consistently deliver a high standard of work, while also showing initiative.</p>
+        <br>
+        <p>I love the process of designing and creating websites. The satisfaction of seeing a webpage complete and code behaving properly (as I have programmed it to perform) is what I enjoy most about web design - along with learning more about creating user-friendly designs with code.
+        </p>
+      </div>
+    </div>
+    <div class="row mb-5 mt-3">
+      <button class="btn-hide btn-lg btn-info mx-auto">Back to news</button>
     </div>
   </div>
   <!-- <p>This is a paragraph.</p>
@@ -62,10 +79,10 @@
 
 
 
-<script src="node_modules/jquery/dist/jquery.min.js"></script>
-<script src="node_modules/popper.js/dist/umd/popper.min.js"></script>
-<script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-<script src="js/config.json"></script>
-<script src="js/script.js"></script>
-  </body>
+  <script src="node_modules/jquery/dist/jquery.min.js"></script>
+  <script src="node_modules/popper.js/dist/umd/popper.min.js"></script>
+  <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script src="js/config.json"></script>
+  <script src="js/script.js"></script>
+</body>
 </html>

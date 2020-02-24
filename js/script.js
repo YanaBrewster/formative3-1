@@ -2,9 +2,9 @@ $(document).ready(function(){
 
   // get api key
   var myKey = JSON.parse(apiKey);
-  console.log(myKey[0]);
+  // console.log(myKey[0]);
   myKey = myKey[0].key;
-  console.log(myKey);
+  // console.log(myKey);
 
   var url = 'http://newsapi.org/v2/top-headlines?' + 'country=nz' + '&apiKey=' +  myKey;
 

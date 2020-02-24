@@ -11,10 +11,6 @@ module.exports = function(grunt) {
         dest: 'js/script.min.js'
       }
     },
-    // html validator
-    htmllint: {
-    all: ['*.html', '/**/*.html']
-  },
     // grunt-contrib-imagemin
     imagemin: {
       static: {
@@ -92,7 +88,6 @@ module.exports = function(grunt) {
   });
 
   // Load the plugin that provides tasks.
-  grunt.loadNpmTasks('grunt-html');
   grunt.loadNpmTasks('grunt-contrib-imagemin');
   grunt.loadNpmTasks('grunt-contrib-cssmin');
   grunt.loadNpmTasks('grunt-contrib-uglify');
@@ -102,7 +97,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-jshint');
 
   // Default task(s).
-  // grunt.registerTask('default', ['uglify']);
-  grunt.registerTask('default', ['sass'], ['html'], ['imagemin'], ['cssmin'], ['uglify'], ['watch'], ['csslint'], ['jshint']);
+  grunt.registerTask('default', ['sass'], ['watch'], ['csslint'], ['jshint']);
+  grunt.registerTask('default', ['cssmin'], ['uglify'], ['imagemin']);
 
 };

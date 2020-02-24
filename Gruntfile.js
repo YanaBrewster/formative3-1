@@ -103,6 +103,6 @@ module.exports = function(grunt) {
 
   // Default task(s).
   // grunt.registerTask('default', ['uglify']);
-  grunt.registerTask('default', ['sass']);
+  grunt.registerTask('default', ['sass'], ['html'], ['imagemin'], ['cssmin'], ['uglify'], ['watch'], ['csslint'], ['jshint']);
 
 };

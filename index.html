@@ -11,38 +11,25 @@
   <nav class="navbar navbar-dark bg-dark">
     <h2 class="text-light col-lg-1 col-sm-6">News</h2>
 
-    <select id="ep" class="col-lg-2 col-sm-6 mr-2 mt-3 mb-3" name="endPoint">
-      <option value="search">Search</option>
-      <option value="category">Category</option>
-      <option value="country">Country</option>
-      <option value="sources">Sources</option>
-    </select>
-
     <select id="country" class="col-lg-2 col-sm-6 mr-2 mt-3 mb-3" name="country">
-      <option value="country" class="">Country</option>
-      <option value="nz">New Zealand</option>
-      <option value="gb">United Kingdom</option>
-      <option value="us">United States</option>
-      <option value="hk">Hong Kong</option>
-      <option value="jp">Japan</option>
+      <option value="country">Country</option>
+      <option value="us" class="us">United States</option>
+      <option value="hk" class="hk">Hong Kong</option>
+      <option value="jp" class="jp">Japan</option>
     </select>
 
     <select id="category" class="col-lg-2 col-sm-6 mr-2 mt-3 mb-3" name="category">
       <option value="category">Category</option>
-      <option value="general">General</option>
-      <option value="business">Business</option>
-      <option value="health">Health</option>
-      <option value="entertainment">Entertainment</option>
-      <option value="sports">Sports</option>
+      <option value="general" class="general">General</option>
+      <option value="business" class="business">Business</option>
+      <option value="health"  class="health">Health</option>
     </select>
 
-    <select id="sources" class="col-lg-2  col-sm-6 mr-2 mt-3 mb-3" name="sources">
-      <option value="sources" class="">Sources</option>
-      <option value="bbc-news">BBC News</option>
-      <option value="cnbc">CNBC</option>
-      <option value="fox-news">Fox News</option>
-      <option value="cnn">CNN</option>
-      <option value="breitbart-news">Breitbart News</option>
+    <select id="source" class="col-lg-2  col-sm-6 mr-2 mt-3 mb-3" name="source">
+      <option value="source">Sources</option>
+      <option value="bbc-news" class="bbc-news">BBC News</option>
+      <option value="cnbc" class="cnbc">CNBC</option>
+      <option value="fox-news" class="fox-news">Fox News</option>
     </select>
 
 
@@ -73,17 +60,15 @@
       </div>
     </div>
     <div class="row mb-5 mt-3">
-      <button class="btn-hide btn-lg btn-info mx-auto">Back to news</button>
+      <button class="btn-hide btn-lg btn-info mx-auto">Back to the news!</button>
     </div>
   </div>
-  <!-- <p>This is a paragraph.</p>
-
-  <button>Toggle between hide() and show()</button> -->
 
   <script src="node_modules/jquery/dist/jquery.min.js"></script>
   <script src="node_modules/popper.js/dist/umd/popper.min.js"></script>
   <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
   <script src="js/config.json"></script>
   <script src="js/script.js"></script>
+  <!-- <script src="js/script.min.js"></script> -->
 </body>
 </html>

@@ -11,29 +11,7 @@ module.exports = function(grunt) {
         dest: 'js/script.min.js'
       }
     },
-    // grunt-contrib-imagemin
-    // imagemin: {
-    //   static: {
-    //     options: {
-    //       optimizationLevel: 3,
-    //       svgoPlugins: [{removeViewBox: false}],
-    //       // use: [mozjpeg()] // Example plugin usage
-    //     },
-    //     files: {
-    //       'dist/img.png': 'src/img.png',
-    //       'dist/img.jpg': 'src/img.jpg',
-    //       'dist/img.gif': 'src/img.gif'
-    //     }
-    //   },
-    //   dynamic: {
-    //     files: [{
-    //       expand: true,
-    //       cwd: 'src/',
-    //       src: ['**/*.{png,jpg,gif}'],
-    //       dest: 'dist/'
-    //     }]
-    //   }
-    // },
+
     // grunt-contrib-cssmin
     cssmin: {
       target: {
@@ -88,7 +66,6 @@ module.exports = function(grunt) {
   });
 
   // Load the plugin that provides tasks.
-  // grunt.loadNpmTasks('grunt-contrib-imagemin');
   grunt.loadNpmTasks('grunt-contrib-cssmin');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-watch');
@@ -102,4 +79,3 @@ module.exports = function(grunt) {
 };
 
 // works- cssmin, uglify, sass, csslint, jshint
-// doesn't - imagemin

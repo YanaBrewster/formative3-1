@@ -113,7 +113,7 @@ $(document).ready(function(){
         '<div class="col col-lg-4 col-md-12 col-sm-12 pb-3">'+
         '<div class="card border border-primary">' +
         '<img src="'+ data.articles[i].urlToImage +'" class="card-img" alt="news image">' +
-        '<div class="card-body px-3 py-3"><h5 class="card-title">' + data.articles[i].title + '</h5>' +
+        '<div class="card-body px-3 py-3"><h5 class="card-title"><a href="' + data.articles[i].url + '">' + data.articles[i].title + '</a></h5>' +
         '<p class="card-text">'+ data.articles[i].description + '</p>' +
         '<p class="card-text">Source: <i>'+ data.articles[i].source.name + '</i></p><hr>' +
         '<p class="card-text">| '+ data.articles[i].publishedAt + ' |</p>';

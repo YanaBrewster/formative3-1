@@ -102,7 +102,7 @@ $(document).ready(function(){
         //   }
         // }// else ends
 
-      };//displayResults ends
+      }//displayResults ends
 
       // SHOW ARTICLES ON LOAD
       var i;
@@ -125,8 +125,6 @@ $(document).ready(function(){
       console.log('error');
     } // error
   });//ajax
-
-
 
   //  SHOW AND HIDE ABOUT SECTION
 

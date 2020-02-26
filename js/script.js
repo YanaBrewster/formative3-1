@@ -22,6 +22,25 @@ var countrys = [{
 }]
 console.log(countrys);
 
+//================================================
+//user input
+function getCountryValue(){
+  var countryValue = $('#inputCountry option:selected').val();
+  console.log(countryValue);
+}
+
+//anonymous function
+$('#inputCountry').on('change', function() {
+  getCountryValue();
+});
+
+
+// i check if i took the right data to beable to do something else . Do I take the correct data?
+// https://stackoverflow.com/questions/11179406/jquery-get-value-of-select-onchange
+
+//==============================================
+
+
 
 //   function countrys(code, name) {
 //     this.code = code;

@@ -1,9 +1,9 @@
 $(document).ready(function(){
 
   var country, category, source, endPoint;
-  var countryCode = '';
-  var categoryCode = '';
-  var sourceCode = '';
+  var countryCode;
+  var categoryCode;
+  var sourceCode;
 
 // COUNTRYS OBJECT
 
@@ -87,41 +87,46 @@ console.log(sources);
 
 function getInput(){
 
+var i;
+
+
   for (i = 0; i < categorys.length; i++ ){
-    if ((category === categorys[i].name) && (country !== 'noCountry')){
+    if ((inputCategory === categorys[i].name) && (inputCountry !== 'noCountry')){
       categoryCode = '&category=' + categorys[i].code;
       endPoint = 'top-headlines';
-      console.log(categoryCode + endPoint);
-    } else if ((category === categorys[i].name) && (country === 'noCountry')){
+
+    } else if ((inputCategory === categorys[i].name) && (inputCountry === 'noCountry')){
       categoryCode = 'category=' + categorys[i].code;
       countryCode = '';
       endPoint = 'top-headlines';
-        console.log(categoryCode + endPoint);
+
     } // else if ends
   } //category loop ends
   for (i = 0; i < countrys.length; i++ ){
-    if ((country === countrys[i].name) && (category === 'noCategory')){
+    if ((inputCountry === countrys[i].name) && (inputCategory === 'noCategory')){
       countryCode = 'country=' + countrys[i].code;
       countryCode = '';
       endPoint = 'top-headlines';
-      console.log(countryCode + endPoint);
-    } else if ((country === countrys[i].name) && (country !== 'noCategory')){
+
+    } else if ((inputCountry === countrys[i].name) && (inputCountry !== 'noCategory')){
       countryCode = 'country=' + countrys[i].code;
       endPoint = 'top-headlines';
-      console.log(countryCode + endPoint);
+
     } // else if ends
   } //country loop ends
-  // for (i = 0; i < sources.length; i++ ){
-  //   if ((source=== sources[i].name) && (country !== 'noCountry') && (category !== 'noCategory')){
-  //     sourceCode = 'source=' + sources[i].code;
-  //     countryCode = ' ';
-  //     categoryCode = ' ';
-  //     endPoint = 'top-headlines';
-  //   }
-  // } //source loop ends
-  var url = `http://newsapi.org/v2/top-headlines?${countryCode}${categoryCode}&apiKey=${myKey}`;
-  console.log(url);
+  for (i = 0; i < sources.length; i++ ){
+    if ((inputSource=== sources[i].name) && (inputCountry !== 'noCountry') && (inputCategory !== 'noCategory')){
+      sourceCode = 'source=' + sources[i].code;
+      countryCode = '';
+      categoryCode = '';
+      endPoint = 'top-headlines';
+    }
+  }
+  //source loop ends
 } // getInput ends
+
+// var url = `http://newsapi.org/v2/top-headlines?${countryCode}${categoryCode}${sourceCode}&apiKey=${myKey}`;
+// console.log(url);
 
   // get api key
   var myKey = JSON.parse(apiKey);
@@ -145,10 +150,14 @@ function getInput(){
       console.log(data);
 
       $('#submit').click(function(){
-        var country = document.getElementById('inputCountry').value ;
-        var category = document.getElementById('inputCategory').value ;
-        var source = document.getElementById('inputSource').value ;
-        console.log(country, category, source);
+        inputCategory = document.getElementById('inputCategory').value;
+        inputCountry = document.getElementById('inputCountry').value;
+        inputSource = document.getElementById('inputSource').value;
+        //
+        // var country = document.getElementById('inputCountry').value ;
+        // var category = document.getElementById('inputCategory').value ;
+        // var source = document.getElementById('inputSource').value ;
+        // console.log(country, category, source);
       });
 
 

@@ -1,46 +1,140 @@
 $(document).ready(function(){
 
+  var country, category, source, endPoint;
+  var countryCode = '';
+  var categoryCode = '';
+  var sourceCode = '';
+
+// COUNTRYS OBJECT
+
+var countrys = [{
+  code: 0,
+  name: 'Country'
+},{
+  code: 'us',
+  name: 'United States'
+},{
+  code: 'hk',
+  name: 'Hong Kong'
+},{
+  code: 'jp',
+  name: 'Japan'
+}]
+console.log(countrys);
+
+
+//   function countrys(code, name) {
+//     this.code = code;
+//     this.name = name;
+//   }
+// var us = new countrys('us', 'United States');
+// var hk = new countrys('hk', 'Hong Kong');
+// var jp = new countrys('jp', 'Japan');
+
+// console.log(jp);
+
+// CATEGORYS OBJECT
+
+var categorys = [{
+  code: 0,
+  name: 'Category'
+},{
+  code: 'general',
+  name: 'General'
+},{
+  code: 'health',
+  name: 'Health'
+},{
+  code: 'business',
+  name: 'Business'
+}]
+console.log(categorys);
+
+// function categorys(code, name) {
+//   this.code = code;
+//   this.name = name;
+// }
+// var general = new categorys('general', 'General');
+// var health = new categorys('health', 'Health');
+// var business = new categorys('business', 'Business');
+
+// SOURCES OBJECT
+
+var sources = [{
+  code: 0,
+  name: 'Source'
+},{
+  code: 'bbc-news',
+  name: 'BBC News'
+},{
+  code: 'cnbc',
+  name: 'CNBC'
+},{
+  code: 'fox-news',
+  name: 'Fox News'
+}]
+console.log(sources);
+
+// function sources(code, name) {
+//   this.code = code;
+//   this.name = name;
+// }
+// var bbc = new sources('bbc-news', 'BBC News');
+// var cnbc = new sources('cnbc', 'CNBC');
+// var foxNews = new sources('fox-news', 'FOX News');
+
+// GET INPUT OF SUBMIT
+
+function getInput(){
+
+  for (i = 0; i < categorys.length; i++ ){
+    if ((category === categorys[i].name) && (country !== 'noCountry')){
+      categoryCode = '&category=' + categorys[i].code;
+      endPoint = 'top-headlines';
+      console.log(categoryCode + endPoint);
+    } else if ((category === categorys[i].name) && (country === 'noCountry')){
+      categoryCode = 'category=' + categorys[i].code;
+      countryCode = '';
+      endPoint = 'top-headlines';
+        console.log(categoryCode + endPoint);
+    } // else if ends
+  } //category loop ends
+  for (i = 0; i < countrys.length; i++ ){
+    if ((country === countrys[i].name) && (category === 'noCategory')){
+      countryCode = 'country=' + countrys[i].code;
+      countryCode = '';
+      endPoint = 'top-headlines';
+      console.log(countryCode + endPoint);
+    } else if ((country === countrys[i].name) && (country !== 'noCategory')){
+      countryCode = 'country=' + countrys[i].code;
+      endPoint = 'top-headlines';
+      console.log(countryCode + endPoint);
+    } // else if ends
+  } //country loop ends
+  // for (i = 0; i < sources.length; i++ ){
+  //   if ((source=== sources[i].name) && (country !== 'noCountry') && (category !== 'noCategory')){
+  //     sourceCode = 'source=' + sources[i].code;
+  //     countryCode = ' ';
+  //     categoryCode = ' ';
+  //     endPoint = 'top-headlines';
+  //   }
+  // } //source loop ends
+  var url = `http://newsapi.org/v2/top-headlines?${countryCode}${categoryCode}&apiKey=${myKey}`;
+  console.log(url);
+} // getInput ends
+
   // get api key
   var myKey = JSON.parse(apiKey);
   // console.log(myKey[0]);
   myKey = myKey[0].key;
   // console.log(myKey);
 
+// onLoad(){
   var url = 'http://newsapi.org/v2/top-headlines?' + 'country=nz' + '&apiKey=' +  myKey;
+// }
 
-  // COUNTRY
-  $('.us').click(function(){
-    country = 'us';
-  });
-  $('.hk').click(function(){
-    country = 'hk';
-  });
-  $('.jp').click(function(){
-    country = 'jp';
-  });
 
-  // CATEGORY
-  $('.general').click(function(){
-    category = 'general';
-  });
-  $('.business').click(function(){
-    category = 'business';
-  });
-  $('.health').click(function(){
-    category = 'health';
-  });
-
-  // SOURCES
-  $('.bbc-news').click(function(){
-    source = 'bbc-news';
-  });
-  $('.cnbc').click(function(){
-    source = 'cnbc';
-  });
-  $('.fox-news').click(function(){
-    source = 'fox-news';
-  });
-
+// getInput();
 
   //ajax method
   $.ajax({
@@ -51,67 +145,22 @@ $(document).ready(function(){
       console.log(data);
 
       $('#submit').click(function(){
-        var country = document.getElementById('country').value ;
-        var category = document.getElementById('category').value ;
-        var source = document.getElementById('source').value ;
+        var country = document.getElementById('inputCountry').value ;
+        var category = document.getElementById('inputCategory').value ;
+        var source = document.getElementById('inputSource').value ;
         console.log(country, category, source);
-
-        // displayResults(country, category, source);
-
       });
 
-      function displayResults(country, category, source){
-
-        //   if (( country == 'country' ) && ( category == 'category')) {
-        //     if (( category == 'category' ) && ( country == 'country')) {
-
-        //     var url = `http://newsapi.org/v2/top-headlines?country=${country}${category}${myKey}`;
-        //     console.log(url);
-        //
-        //       var a;
-        //       for (a=0; a<data.articles.length; a++){
-        //       $("#result").empty();
-        //       document.getElementById('result').innerHTML +=
-        //
-        //       '<div class="col col-lg-4 col-md-12 col-sm-12 pb-3">'+
-        //       '<div class="card border border-primary">' +
-        //       '<img src="'+ data.articles[a].urlToImage +'" class="card-img" alt="news image">' +
-        //       '<div class="card-body px-3 py-3"><h5 class="card-title">' + data.articles[a].title + '</h5>' +
-        //       '<p class="card-text">'+ data.articles[a].description + '</p>' +
-        //       '<p class="card-text">Source: <i>'+ data.articles[a].source.name + '</i></p><hr>' +
-        //       '<p class="card-text">| '+ data.articles[a].publishedAt + ' |</p>';
-        //     }
-        //   }
-        //   }
-        //   else {
-        //     var url =  `http://newsapi.org/v2/top-headlines?${source}${myKey}`;
-        //     console.log(url);
-        //
-        //     var b;
-        //     for (b=0; b<data.articles.length; b++){
-        //     $("#result").empty();
-        //     document.getElementById('result').innerHTML +=
-        //
-        //     '<div class="col col-lg-4 col-md-12 col-sm-12 pb-3">'+
-        //     '<div class="card border border-primary">' +
-        //     '<img src="'+ data.articles[b].urlToImage +'" class="card-img" alt="news image">' +
-        //     '<div class="card-body px-3 py-3"><h5 class="card-title">' + data.articles[b].title + '</h5>' +
-        //     '<p class="card-text">'+ data.articles[b].description + '</p>' +
-        //     '<p class="card-text">Source: <i>'+ data.articles[b].source.name + '</i></p><hr>' +
-        //     '<p class="card-text">| '+ data.articles[b].publishedAt + ' |</p>';
-        //   }
-        // }// else ends
-
-      }//displayResults ends
 
       // SHOW ARTICLES ON LOAD
+      $("#result").empty();
       var i;
       for (i=0; i<data.articles.length; i++){
 
         document.getElementById('result').innerHTML +=
 
         '<div class="col col-lg-4 col-md-12 col-sm-12 pb-3">'+
-        '<div class="card border border-primary">' +
+        '<div class="card border border-info">' +
         '<img src="'+ data.articles[i].urlToImage +'" class="card-img" alt="news image">' +
         '<div class="card-body px-3 py-3"><h5 class="card-title"><a href="' + data.articles[i].url + '">' + data.articles[i].title + '</a></h5>' +
         '<p class="card-text">'+ data.articles[i].description + '</p>' +

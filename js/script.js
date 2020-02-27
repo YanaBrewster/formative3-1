@@ -1,29 +1,90 @@
 $(document).ready(function(){
 
-  var country, category, source, endPoint;
-  var countryCode;
-  var categoryCode;
-  var sourceCode;
 
-// COUNTRYS OBJECT
+  var myKey = JSON.parse(apiKey);
+  myKey = myKey[0].key;
 
-var countrys = [{
-  code: 0,
-  name: 'Country'
-},{
-  code: 'us',
-  name: 'United States'
-},{
-  code: 'hk',
-  name: 'Hong Kong'
-},{
-  code: 'jp',
-  name: 'Japan'
-}]
-console.log(countrys);
+  $('#submit').click(function(){
+    var category = document.getElementById('inputCategory').value;
+    var country = document.getElementById('inputCountry').value;
+    // inputSource = document.getElementById('inputSource').value;
+    storeData(country, category);
+    var url = buildUrl();
+    callApi(url);
+  });
+
+function callApi(url) {
+  $.ajax({
+    url: url,
+    type:'GET',
+    data:'json',
+    success: function(data){
+
+      // createSourceList(data.articles);
+      displayAllNews(data.articles);
+
+    },//success ends
+    error:function(){
+      console.log('error');
+    } // error
+  });//ajax
+}
+// =======================================
+// STORE USER DATA
+
+function storeUserInput(){
+  this.countryCode = null;
+  this.categoryCode = null;
+  this.sourceCode = null;
+}
+var userInput = new storeUserInput();
+
+function storeData(country, category){
+  if(category !== ""){
+    var selectedCategory = $('#inputCategory option:selected').val();
+    userInput.categoryCode = selectedCategory;
+  }
+  if(country !== ""){
+    var selectedCountry = $('#inputCountry option:selected').val();
+    userInput.countryCode = selectedCountry;
+  }
+  console.log(userInput);
+}
+// ===================================================
+// BUILD DYNAMIC URL
+
+  function buildUrl(){
+    var url = 'http://newsapi.org/v2/top-headlines?' + 'apiKey=' + myKey;
+    if(userInput.countryCode != null){
+      url +=  '&country=' + userInput.countryCode;
+    }
+    if(userInput.categoryCode != null){
+      url +=  '&category=' + userInput.categoryCode;
+    }
+    console.log(url);
+    return url;
+  }
+
+// ==============================================================
+// DISPLAY FILTERED NEWS
+
+function displayAllNews(data){
+  $("#result").empty();
+  var i;
+  for (i=0; i<data.length; i++){
+    document.getElementById('result').innerHTML +=
+    '<div class="col col-lg-4 col-md-12 col-sm-12 pb-3">'+
+    '<div class="card border border-info">' +
+    '<img src="'+ data[i].urlToImage +'" class="card-img" alt="news image">' +
+    '<div class="card-body px-3 py-3"><h5 class="card-title"><a href="' + data[i].url + '">' + data[i].title + '</a></h5>' +
+    '<p class="card-text">'+ data[i].description + '</p>' +
+    '<p class="card-text">Source: <i>'+ data[i].source.name + '</i></p><hr>' +
+    '<p class="card-text">| '+ data[i].publishedAt + ' |</p>';
+  }// i loop ends
+}
 
 //================================================
-//user input
+//user input country
 function getCountryValue(){
   var countryValue = $('#inputCountry option:selected').val();
   console.log(countryValue);
@@ -34,131 +95,39 @@ $('#inputCountry').on('change', function() {
   getCountryValue();
 });
 
-
-// i check if i took the right data to beable to do something else . Do I take the correct data?
-// https://stackoverflow.com/questions/11179406/jquery-get-value-of-select-onchange
-
 //==============================================
+// user input category
+
+function getCategoryValue(){
+  var categoryValue = $('#inputCategory option:selected').val();
+  console.log(categoryValue);
+}
+
+//anonymous function
+$('#inputCategory').on('change', function() {
+  getCategoryValue();
+});
 
 
-
-//   function countrys(code, name) {
-//     this.code = code;
-//     this.name = name;
-//   }
-// var us = new countrys('us', 'United States');
-// var hk = new countrys('hk', 'Hong Kong');
-// var jp = new countrys('jp', 'Japan');
-
-// console.log(jp);
-
-// CATEGORYS OBJECT
-
-var categorys = [{
-  code: 0,
-  name: 'Category'
-},{
-  code: 'general',
-  name: 'General'
-},{
-  code: 'health',
-  name: 'Health'
-},{
-  code: 'business',
-  name: 'Business'
-}]
-console.log(categorys);
-
-// function categorys(code, name) {
-//   this.code = code;
-//   this.name = name;
+//=============================================================================
+// // user input source
+//
+// function getSourceValue(){
+//   var sourceValue = $('#inputSource option:selected').val();
+//   console.log(sourceValue);
 // }
-// var general = new categorys('general', 'General');
-// var health = new categorys('health', 'Health');
-// var business = new categorys('business', 'Business');
+//
+// //anonymous function
+// $('#inputSource').on('change', function() {
+//   getSourceValue();
+// });
+//
 
-// SOURCES OBJECT
+// ============================================================================
 
-var sources = [{
-  code: 0,
-  name: 'Source'
-},{
-  code: 'bbc-news',
-  name: 'BBC News'
-},{
-  code: 'cnbc',
-  name: 'CNBC'
-},{
-  code: 'fox-news',
-  name: 'Fox News'
-}]
-console.log(sources);
+// DISPLAY ON LOAD
 
-// function sources(code, name) {
-//   this.code = code;
-//   this.name = name;
-// }
-// var bbc = new sources('bbc-news', 'BBC News');
-// var cnbc = new sources('cnbc', 'CNBC');
-// var foxNews = new sources('fox-news', 'FOX News');
-
-// GET INPUT OF SUBMIT
-
-function getInput(){
-
-var i;
-
-
-  for (i = 0; i < categorys.length; i++ ){
-    if ((inputCategory === categorys[i].name) && (inputCountry !== 'noCountry')){
-      categoryCode = '&category=' + categorys[i].code;
-      endPoint = 'top-headlines';
-
-    } else if ((inputCategory === categorys[i].name) && (inputCountry === 'noCountry')){
-      categoryCode = 'category=' + categorys[i].code;
-      countryCode = '';
-      endPoint = 'top-headlines';
-
-    } // else if ends
-  } //category loop ends
-  for (i = 0; i < countrys.length; i++ ){
-    if ((inputCountry === countrys[i].name) && (inputCategory === 'noCategory')){
-      countryCode = 'country=' + countrys[i].code;
-      countryCode = '';
-      endPoint = 'top-headlines';
-
-    } else if ((inputCountry === countrys[i].name) && (inputCountry !== 'noCategory')){
-      countryCode = 'country=' + countrys[i].code;
-      endPoint = 'top-headlines';
-
-    } // else if ends
-  } //country loop ends
-  for (i = 0; i < sources.length; i++ ){
-    if ((inputSource=== sources[i].name) && (inputCountry !== 'noCountry') && (inputCategory !== 'noCategory')){
-      sourceCode = 'source=' + sources[i].code;
-      countryCode = '';
-      categoryCode = '';
-      endPoint = 'top-headlines';
-    }
-  }
-  //source loop ends
-} // getInput ends
-
-// var url = `http://newsapi.org/v2/top-headlines?${countryCode}${categoryCode}${sourceCode}&apiKey=${myKey}`;
-// console.log(url);
-
-  // get api key
-  var myKey = JSON.parse(apiKey);
-  // console.log(myKey[0]);
-  myKey = myKey[0].key;
-  // console.log(myKey);
-
-// onLoad(){
   var url = 'http://newsapi.org/v2/top-headlines?' + 'country=nz' + '&apiKey=' +  myKey;
-// }
-
-
-// getInput();
 
   //ajax method
   $.ajax({
@@ -167,18 +136,6 @@ var i;
     data:'json',
     success: function(data){
       console.log(data);
-
-      $('#submit').click(function(){
-        inputCategory = document.getElementById('inputCategory').value;
-        inputCountry = document.getElementById('inputCountry').value;
-        inputSource = document.getElementById('inputSource').value;
-        //
-        // var country = document.getElementById('inputCountry').value ;
-        // var category = document.getElementById('inputCategory').value ;
-        // var source = document.getElementById('inputSource').value ;
-        // console.log(country, category, source);
-      });
-
 
       // SHOW ARTICLES ON LOAD
       $("#result").empty();
@@ -196,12 +153,15 @@ var i;
         '<p class="card-text">| '+ data.articles[i].publishedAt + ' |</p>';
 
       }// i loop ends
-
     },//success ends
     error:function(){
       console.log('error');
     } // error
   });//ajax
+
+
+// ===============================================================================
+
 
   //  SHOW AND HIDE ABOUT SECTION
 

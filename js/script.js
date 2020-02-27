@@ -7,125 +7,190 @@ $(document).ready(function(){
   $('#submit').click(function(){
     var category = document.getElementById('inputCategory').value;
     var country = document.getElementById('inputCountry').value;
-    // inputSource = document.getElementById('inputSource').value;
     storeData(country, category);
     var url = buildUrl();
-    callApi(url);
+    getApiData(url);
   });
 
-function callApi(url) {
-  $.ajax({
-    url: url,
-    type:'GET',
-    data:'json',
-    success: function(data){
+  $('#submitSource').click(function(){
+    var source = document.getElementById('inputSource').value;
+    storeSourceData(source);
+    var url = buildUrlSource();
+    getApiDataSource(url);
+  });
 
-      // createSourceList(data.articles);
-      displayAllNews(data.articles);
+  // get the api url requested from submit filter
+  function getApiData(url) {
+    $.ajax({
+      url: url,
+      type:'GET',
+      data:'json',
+      success: function(data){
 
-    },//success ends
-    error:function(){
-      console.log('error');
-    } // error
-  });//ajax
-}
-// =======================================
-// STORE USER DATA
+        displayFilteredNews(data.articles);
 
-function storeUserInput(){
-  this.countryCode = null;
-  this.categoryCode = null;
-  this.sourceCode = null;
-}
-var userInput = new storeUserInput();
-
-function storeData(country, category){
-  if(category !== ""){
-    var selectedCategory = $('#inputCategory option:selected').val();
-    userInput.categoryCode = selectedCategory;
+      },//success ends
+      error:function(){
+        console.log('error');
+      } // error
+    });//ajax
   }
-  if(country !== ""){
-    var selectedCountry = $('#inputCountry option:selected').val();
-    userInput.countryCode = selectedCountry;
+
+  function getApiDataSource(url) {
+    $.ajax({
+      url: url,
+      type:'GET',
+      data:'json',
+      success: function(data){
+
+        displayFilteredSourceNews(data.articles);
+      },//success ends
+      error:function(){
+        console.log('error');
+      } // error
+    });//ajax
   }
-  console.log(userInput);
-}
-// ===================================================
-// BUILD DYNAMIC URL
+
+  // ===================================================================
+  // STORE USER DATA
+
+  function storeUserInput(){
+    // this assigns no value to variables until input
+    var country = '';
+    var category = '';
+    var source = '';
+  }
+
+  // new function within userInput that stores data
+  var userInput = new storeUserInput();
+
+  function storeData(country, category){
+    // if the category input is not empty
+    if(category !== ''){
+      // selectedCategory stores the value inputted
+      var selectedCategory = $('#inputCategory option:selected').val();
+      // userInput is a function that stores the inputted value for the selected category
+      userInput.category = selectedCategory;
+    }
+    if(country !== ''){
+      var selectedCountry = $('#inputCountry option:selected').val();
+      userInput.country = selectedCountry;
+    }
+  }
+
+  function storeSourceData(source) {
+    if(source !== ''){
+      var selectedSource = $('#inputSource option:selected').val();
+      userInput.source = selectedSource;
+    }
+  }
+
+  // ===================================================
+  // BUILD DYNAMIC URL
 
   function buildUrl(){
     var url = 'http://newsapi.org/v2/top-headlines?' + 'apiKey=' + myKey;
-    if(userInput.countryCode != null){
-      url +=  '&country=' + userInput.countryCode;
+    // if the user input for country is not empty
+    if(userInput.country != ''){
+      // append this values at the end of the url
+      url +=  '&country=' + userInput.country;
     }
-    if(userInput.categoryCode != null){
-      url +=  '&category=' + userInput.categoryCode;
+    if(userInput.category != ''){
+      url +=  '&category=' + userInput.category;
     }
-    console.log(url);
+    // console.log(url);
     return url;
   }
 
-// ==============================================================
-// DISPLAY FILTERED NEWS
+  function buildUrlSource(){
+    var url = 'http://newsapi.org/v2/top-headlines?' + 'apiKey=' + myKey;
+    if(userInput.source != ''){
+      url += "&sources=" + userInput.source;
+    }
+    // console.log(url);
+    return url;
+  }
 
-function displayAllNews(data){
-  $("#result").empty();
-  var i;
-  for (i=0; i<data.length; i++){
+
+  // ==============================================================
+  // DISPLAY FILTERED NEWS
+
+  function displayFilteredNews(data){
+    $("#result").empty();
     document.getElementById('result').innerHTML +=
-    '<div class="col col-lg-4 col-md-12 col-sm-12 pb-3">'+
-    '<div class="card border border-info">' +
-    '<img src="'+ data[i].urlToImage +'" class="card-img" alt="news image">' +
-    '<div class="card-body px-3 py-3"><h5 class="card-title"><a href="' + data[i].url + '">' + data[i].title + '</a></h5>' +
-    '<p class="card-text">'+ data[i].description + '</p>' +
-    '<p class="card-text">Source: <i>'+ data[i].source.name + '</i></p><hr>' +
-    '<p class="card-text">| '+ data[i].publishedAt + ' |</p>';
-  }// i loop ends
-}
+    '<div class="col-12 col-lg-12 col-md-12 col-sm-12"><h2 class="mt-5 text-center">Breaking Headlines in ' + userInput.country + ' about ' + userInput.category + ' News</h2><br><br></div>';
+    var i;
+    for (i=0; i<data.length; i++){
+      document.getElementById('result').innerHTML +=
+      '<div class="col col-lg-4 col-md-12 col-sm-12 pb-3">'+
+      '<div class="card border border-info">' +
+      '<img src="'+ data[i].urlToImage +'" class="card-img" alt="news image">' +
+      '<div class="card-body px-3 py-3"><h5 class="card-title"><a href="' + data[i].url + '">' + data[i].title + '</a></h5>' +
+      '<p class="card-text">'+ data[i].description + '</p>' +
+      '<p class="card-text">Source: <i>'+ data[i].source.name + '</i></p><hr>' +
+      '<p class="card-text">| '+ data[i].publishedAt + ' |</p>';
+    }// i loop ends
+  }
 
-//================================================
-//user input country
-function getCountryValue(){
-  var countryValue = $('#inputCountry option:selected').val();
-  console.log(countryValue);
-}
+  function displayFilteredSourceNews(data){
+    $("#result").empty();
+    document.getElementById('result').innerHTML +=
+    '<div class="col-12 col-lg-12 col-md-12 col-sm-12"><h2 class="mt-5 text-center">Breaking Headlines from ' + userInput.source + '</h2><br><br></div>';
+    var i;
+    for (i=0; i<data.length; i++){
+      document.getElementById('result').innerHTML +=
+      '<div class="col col-lg-4 col-md-12 col-sm-12 pb-3">'+
+      '<div class="card border border-info">' +
+      '<img src="'+ data[i].urlToImage +'" class="card-img" alt="news image">' +
+      '<div class="card-body px-3 py-3"><h5 class="card-title"><a href="' + data[i].url + '">' + data[i].title + '</a></h5>' +
+      '<p class="card-text">'+ data[i].description + '</p>' +
+      '<p class="card-text">Source: <i>'+ data[i].source.name + '</i></p><hr>' +
+      '<p class="card-text">| '+ data[i].publishedAt + ' |</p>';
 
-//anonymous function
-$('#inputCountry').on('change', function() {
-  getCountryValue();
-});
+    }// i loop ends
+  }
 
-//==============================================
-// user input category
+  //================================================
+  //user input country
+  function getCountryValue(){
+    var countryValue = $('#inputCountry option:selected').val();
+  }
 
-function getCategoryValue(){
-  var categoryValue = $('#inputCategory option:selected').val();
-  console.log(categoryValue);
-}
+  //anonymous function
+  $('#inputCountry').on('change', function() {
+    getCountryValue();
+  });
 
-//anonymous function
-$('#inputCategory').on('change', function() {
-  getCategoryValue();
-});
+  //==============================================
+  // user input category
+
+  function getCategoryValue(){
+    var categoryValue = $('#inputCategory option:selected').val();
+  }
+
+  //anonymous function
+  $('#inputCategory').on('change', function() {
+    getCategoryValue();
+  });
 
 
-//=============================================================================
-// // user input source
-//
-// function getSourceValue(){
-//   var sourceValue = $('#inputSource option:selected').val();
-//   console.log(sourceValue);
-// }
-//
-// //anonymous function
-// $('#inputSource').on('change', function() {
-//   getSourceValue();
-// });
-//
+  //=============================================================================
+  // // user input source
 
-// ============================================================================
+  function getSourceValue(){
+    var sourceValue = $('#inputSource option:selected').val();
+    console.log(sourceValue);
+  }
 
-// DISPLAY ON LOAD
+  //anonymous function
+  $('#inputSource').on('change', function() {
+    getSourceValue();
+  });
+
+
+  // ============================================================================
+
+  // DISPLAY ON LOAD
 
   var url = 'http://newsapi.org/v2/top-headlines?' + 'country=nz' + '&apiKey=' +  myKey;
 
@@ -139,6 +204,9 @@ $('#inputCategory').on('change', function() {
 
       // SHOW ARTICLES ON LOAD
       $("#result").empty();
+
+      document.getElementById('result').innerHTML +=
+      '<div class="col-12 col-lg-12 col-md-12 col-sm-12"><h2 class="mt-5 text-center">Breaking Headlines in New Zealand</h2><br><br></div>';
       var i;
       for (i=0; i<data.articles.length; i++){
 
@@ -160,7 +228,7 @@ $('#inputCategory').on('change', function() {
   });//ajax
 
 
-// ===============================================================================
+  // ===============================================================================
 
 
   //  SHOW AND HIDE ABOUT SECTION
@@ -181,4 +249,22 @@ $('#inputCategory').on('change', function() {
     $('.btn-show').show();
   });
 
-});//document.ready
+
+  // DISABLE SOURCE
+
+  // $(function() {
+  //   $("#inputCountry").change(function() {
+  //     $("#inputSource").prop("disabled", true);
+  //   });
+  //
+  //   $("#inputCategory").change(function() {
+  //     $("#inputSource").prop("disabled", true);
+  //
+  //   });
+  //   $("#inputSource").change(function() {
+  //     $("#inputCountry".prop("disabled", true);
+  //     $("#inputCategory".prop("disabled", true);
+  //   });
+  // });
+  
+  });//document.ready

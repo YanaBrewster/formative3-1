@@ -19,6 +19,14 @@ $(document).ready(function(){
     getApiDataSource(url);
   });
 
+  $('#submitSearch').click(function(){
+    var search = document.getElementById('inputSearch').value;
+    storeSearchData(search, searchValue);
+    var url = buildUrlSearch();
+    getApiDataSearch(url);
+  });
+
+
   // get the api url requested from submit filter
   function getApiData(url) {
     $.ajax({
@@ -51,6 +59,22 @@ $(document).ready(function(){
     });//ajax
   }
 
+  function getApiDataSearch(url) {
+    $.ajax({
+      url: url,
+      type:'GET',
+      data:'json',
+      success: function(data){
+
+        displayFilteredSearchNews(data.articles);
+        console.log(url);
+      },//success ends
+      error:function(){
+        console.log('error');
+      } // error
+    });//ajax
+  }
+
   // ===================================================================
   // STORE USER DATA
 
@@ -59,6 +83,7 @@ $(document).ready(function(){
     var country = '';
     var category = '';
     var source = '';
+    var search = '';
   }
 
   // new function within userInput that stores data
@@ -84,6 +109,15 @@ $(document).ready(function(){
       userInput.source = selectedSource;
     }
   }
+
+  function storeSearchData(search, searchValue) {
+    if(search !== ''){
+      var selectedSearch = searchValue;
+      userInput.search = selectedSearch;
+      console.log(userInput.search);
+    }
+  }
+
 
   // ===================================================
   // BUILD DYNAMIC URL
@@ -111,6 +145,14 @@ $(document).ready(function(){
     return url;
   }
 
+  function buildUrlSearch(){
+    var url = 'http://newsapi.org/v2/everything?' + 'apiKey=' + myKey;
+    if(userInput.search != ''){
+      url += 'q=' + userInput.search;
+    }
+    console.log(url);
+    return url;
+  }
 
   // ==============================================================
   // DISPLAY FILTERED NEWS
@@ -150,6 +192,23 @@ $(document).ready(function(){
     }// i loop ends
   }
 
+  function displayFilteredSearchNews(data){
+    $("#result").empty();
+    document.getElementById('result').innerHTML +=
+    '<div class="col-12 col-lg-12 col-md-12 col-sm-12"><h2 class="mt-5 text-center">Breaking Headlines from ' + userInput.search + '</h2><br><br></div>';
+    var i;
+    for (i=0; i<data.length; i++){
+      document.getElementById('result').innerHTML +=
+      '<div class="col col-lg-4 col-md-12 col-sm-12 pb-3">'+
+      '<div class="card border border-info">' +
+      '<img src="'+ data[i].urlToImage +'" class="card-img" alt="news image">' +
+      '<div class="card-body px-3 py-3"><h5 class="card-title"><a href="' + data[i].url + '">' + data[i].title + '</a></h5>' +
+      '<p class="card-text">'+ data[i].description + '</p>' +
+      '<p class="card-text">Source: <i>'+ data[i].source.name + '</i></p><hr>' +
+      '<p class="card-text">| '+ data[i].publishedAt + ' |</p>';
+    }// i loop ends
+  }
+
   //================================================
   //user input country
   function getCountryValue(){
@@ -185,6 +244,20 @@ $(document).ready(function(){
   //anonymous function
   $('#inputSource').on('change', function() {
     getSourceValue();
+  });
+
+  //=============================================================================
+  // // user input search
+
+  function getSearchValue(){
+    var searchValue = document.querySelector('#inputSearch').value;
+    searchValue = searchValue.replace(/\s+/g, '-').toLowerCase();
+    console.log(searchValue);
+  }
+
+  //anonymous function
+  $('#inputSearch').on('change', function() {
+    getSearchValue();
   });
 
 
@@ -266,5 +339,8 @@ $(document).ready(function(){
   //     $("#inputCategory".prop("disabled", true);
   //   });
   // });
-  
-  });//document.ready
+
+  // ==================================================================
+
+
+});//document.ready
